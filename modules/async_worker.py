@@ -245,7 +245,7 @@ def worker():
             performance_selection = Performance.LIGHTNING
 
         if performance_selection == 'Extreme Speed':
-        steps = performance_selection.steps()
+            steps = performance_selection.steps()
         if performance_selection == Performance.EXTREME_SPEED:
             print('Enter LCM mode.')
             progressbar(async_task, 1, 'Downloading LCM components ...')
@@ -654,6 +654,7 @@ def worker():
                 if 'right' in outpaint_selections:
                     inpaint_image = np.pad(inpaint_image, [[0, 0], [0, int(H * 0.35)], [0, 0]], mode='edge')
                     inpaint_mask = np.pad(inpaint_mask, [[0, 0], [0, int(H * 0.35)]], mode='constant',
+                                          constant_values=255)
                     inpaint_image = np.pad(inpaint_image, [[0, 0], [int(W * 0.3), 0], [0, 0]], mode='edge')
                     inpaint_mask = np.pad(inpaint_mask, [[0, 0], [int(W * 0.3), 0]], mode='constant',
                                           constant_values=255)
