@@ -547,12 +547,12 @@ def worker():
                 denoising_strength = overwrite_vary_strength
 
             shape_ceil = get_image_shape_ceil(uov_input_image)
-            if shape_ceil < 1024:
+            if shape_ceil < 796:
                 print(f'[Vary] Image is resized because it is too small.')
-                shape_ceil = 1024
-            elif shape_ceil > 4096:
+                shape_ceil = 796
+            elif shape_ceil > 6144:
                 print(f'[Vary] Image is resized because it is too big.')
-                shape_ceil = 4096
+                shape_ceil = 6144
 
             uov_input_image = set_image_shape_ceil(uov_input_image, shape_ceil)
 
