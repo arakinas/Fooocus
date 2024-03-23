@@ -223,26 +223,23 @@ def worker():
             print(f'Refiner disabled because base model and refiner are same.')
             refiner_model_name = 'None'
 
+        print('Performance selection: ' + performance_selection)
 
-        assert performance_selection in ['Speed', 'Quality', 'Extreme Speed', 'High Quality', 'Higher Quality', 'Epic Quality', 'Lightning Speed', 'Lightning Quality']
+        # assert performance_selection in ['Speed', 'Quality', 'Extreme Speed', 'High Quality', 'Epic Quality', 'Lightning Speed', 'Lightning Quality']
 
         steps = 20
-        if performance_selection == 'Speed':
+        if performance_selection == Performance.EXTREME_SPEED:
             steps = 20
-        if performance_selection == 'Quality':
-            steps = 50
-        if performance_selection == 'High Quality':
-            steps = 80            
-        if performance_selection == 'Higher Quality':
-            steps = 100
-        if performance_selection == 'Epic Quality':
-            steps = 120          
-        if performance_selection == 'Lightning Speed':
+        elif performance_selection == Performance.QUALITY:
+            steps = 45
+        elif performance_selection == Performance.HIGH_QUALITY:
+            steps = 75
+        elif performance_selection == Performance.EPIC_QUALITY:
+            steps = 110
+        elif performance_selection == Performance.LIGHTNING:
             steps = 8
-            performance_selection = Performance.LIGHTNING
-        if performance_selection == 'Lightning Quality':
+        elif performance_selection == Performance.LIGHTNING_QUALITY:
             steps = 14
-            performance_selection = Performance.LIGHTNING
 
         if performance_selection == 'Extreme Speed':
             steps = performance_selection.steps()
@@ -265,7 +262,7 @@ def worker():
             adm_scaler_negative = 1.0
             adm_scaler_end = 0.0
 
-        elif performance_selection == Performance.LIGHTNING:
+        elif performance_selection == Performance.LIGHTNING or performance_selection == Performance.LIGHTNING_QUALITY:
             print('Enter Lightning mode.')
             progressbar(async_task, 1, 'Downloading Lightning components ...')
             loras += [(modules.config.downloading_sdxl_lightning_lora(), 1.0)]
@@ -343,16 +340,21 @@ def worker():
                     if 'fast' in uov_method:
                         skip_prompt_processing = True
                     else:
-                        steps = 18
-
+                        steps = 20
                         if performance_selection == 'Speed':
-                            steps = 25
-
+                            steps = 20
                         if performance_selection == 'Quality':
                             steps = 50
-
-                        if performance_selection == 'Extreme Speed':
-                            steps = 15
+                        if performance_selection == 'High Quality':
+                            steps = 80            
+                        if performance_selection == 'Epic Quality':
+                            steps = 100          
+                        if performance_selection == 'Lightning Speed':
+                            steps = 8
+                            performance_selection = Performance.LIGHTNING
+                        if performance_selection == 'Lightning Quality':
+                            steps = 14
+                            performance_selection = Performance.LIGHTNING
                         steps = performance_selection.steps_uov()
                         
                     progressbar(async_task, 1, 'Downloading upscale models ...')

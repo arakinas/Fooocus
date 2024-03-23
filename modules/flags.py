@@ -68,7 +68,7 @@ default_parameters = {
 }  # stop, weight
 
 inpaint_engine_versions = ['None', 'v1', 'v2.5', 'v2.6']
-performance_selections = ['Speed', 'Quality', 'Extreme Speed', 'High Quality', 'Higher Quality', 'Epic Quality', 'Lightning Speed', 'Lightning Quality']
+performance_selections = ['Speed', 'Quality', 'Extreme Speed', 'High Quality', 'Epic Quality', 'Lightning', 'Lightning Quality']
 output_formats = ['png', 'jpeg', 'webp']
 
 inpaint_engine_versions = ['None', 'v1', 'v2.5', 'v2.6']
@@ -108,14 +108,19 @@ class Steps(IntEnum):
     QUALITY = 60
     SPEED = 30
     EXTREME_SPEED = 8
-    LIGHTNING = 4
-
+    LIGHTNING = 8
+    HIGH_QUALITY = 80
+    EPIC_QUALITY = 100
+    LIGHTNING_QUALITY = 12
 
 class StepsUOV(IntEnum):
     QUALITY = 36
     SPEED = 18
     EXTREME_SPEED = 8
-    LIGHTNING = 4
+    LIGHTNING = 6
+    HIGH_QUALITY = 50
+    EPIC_QUALITY = 60
+    LIGHTNING_QUALITY = 8
 
 
 class Performance(Enum):
@@ -123,6 +128,9 @@ class Performance(Enum):
     SPEED = 'Speed'
     EXTREME_SPEED = 'Extreme Speed'
     LIGHTNING = 'Lightning'
+    HIGH_QUALITY = 'High Quality'
+    EPIC_QUALITY = 'Epic Quality'
+    LIGHTNING_QUALITY = 'Lightning Quality'
 
     @classmethod
     def list(cls) -> list:
