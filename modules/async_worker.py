@@ -240,6 +240,10 @@ def worker():
             steps = 8
         elif performance_selection == Performance.LIGHTNING_QUALITY:
             steps = 14
+        elif performance_selection == Performance.LTNG_4STEP:
+            steps = 4
+        elif performance_selection == Performance.LTNG_2STEP:
+            steps = 2
 
         if performance_selection == 'Extreme Speed':
             steps = performance_selection.steps()
@@ -262,17 +266,17 @@ def worker():
             adm_scaler_negative = 1.0
             adm_scaler_end = 0.0
 
-        elif performance_selection == Performance.LIGHTNING or performance_selection == Performance.LIGHTNING_QUALITY:
+        elif performance_selection == Performance.LIGHTNING:
             print('Enter Lightning mode.')
-            #progressbar(async_task, 1, 'Downloading Lightning components ...')
-            #loras += [(modules.config.downloading_sdxl_lightning_lora(), 1.0)] #this isn't always appropriate. Only some models require it. Bad decision to put this in in the first place.
+            progressbar(async_task, 1, 'Downloading Lightning components ...')
+            loras += [(modules.config.downloading_sdxl_lightning_lora(), 1.0)] 
 
             if refiner_model_name != 'None':
                 print(f'Refiner disabled in Lightning mode.')
 
             refiner_model_name = 'None'
-            #sampler_name = 'euler' #also terrible practice to set this when it's only used by a couple of models. 
-            #scheduler_name = 'sgm_uniform' #also terrible practice to set this when it's only used by a couple of models. 
+            sampler_name = 'euler' 
+            scheduler_name = 'sgm_uniform' 
             sharpness = 1.0
             guidance_scale = 1.8
             adaptive_cfg = 1.0
@@ -351,10 +355,8 @@ def worker():
                             steps = 80          
                         if performance_selection == 'Lightning Speed':
                             steps = 8
-                            performance_selection = Performance.LIGHTNING
                         if performance_selection == 'Lightning Quality':
                             steps = 14
-                            performance_selection = Performance.LIGHTNING
                         steps = performance_selection.steps_uov()
                         
                     progressbar(async_task, 1, 'Downloading upscale models ...')
