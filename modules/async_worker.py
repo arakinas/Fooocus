@@ -223,8 +223,26 @@ def worker():
             print(f'Refiner disabled because base model and refiner are same.')
             refiner_model_name = 'None'
 
-        steps = performance_selection.steps()
+        print('Performance selection: ' + performance_selection.name)
 
+        # assert performance_selection in ['Speed', 'Quality', 'Extreme Speed', 'High Quality', 'Epic Quality', 'Lightning Speed', 'Lightning Quality']
+
+        steps = 20
+        if performance_selection == Performance.EXTREME_SPEED:
+            steps = 20
+        elif performance_selection == Performance.QUALITY:
+            steps = 45
+        elif performance_selection == Performance.HIGH_QUALITY:
+            steps = 60
+        elif performance_selection == Performance.EPIC_QUALITY:
+            steps = 80
+        elif performance_selection == Performance.LIGHTNING:
+            steps = 8
+        elif performance_selection == Performance.LIGHTNING_QUALITY:
+            steps = 14
+
+        if performance_selection == 'Extreme Speed':
+            steps = performance_selection.steps()
         if performance_selection == Performance.EXTREME_SPEED:
             print('Enter LCM mode.')
             progressbar(async_task, 1, 'Downloading LCM components ...')
@@ -244,7 +262,7 @@ def worker():
             adm_scaler_negative = 1.0
             adm_scaler_end = 0.0
 
-        elif performance_selection == Performance.LIGHTNING:
+        elif performance_selection == Performance.LIGHTNING or performance_selection == Performance.LIGHTNING_QUALITY:
             print('Enter Lightning mode.')
             progressbar(async_task, 1, 'Downloading Lightning components ...')
             loras += [(modules.config.downloading_sdxl_lightning_lora(), 1.0)]
@@ -255,8 +273,8 @@ def worker():
             refiner_model_name = 'None'
             sampler_name = 'euler'
             scheduler_name = 'sgm_uniform'
-            sharpness = 0.0
-            guidance_scale = 1.0
+            sharpness = 1.0
+            guidance_scale = 1.8
             adaptive_cfg = 1.0
             refiner_switch = 1.0
             adm_scaler_positive = 1.0
@@ -322,8 +340,23 @@ def worker():
                     if 'fast' in uov_method:
                         skip_prompt_processing = True
                     else:
+                        steps = 20
+                        if performance_selection == 'Speed':
+                            steps = 20
+                        if performance_selection == 'Quality':
+                            steps = 45
+                        if performance_selection == 'High Quality':
+                            steps = 60            
+                        if performance_selection == 'Epic Quality':
+                            steps = 80          
+                        if performance_selection == 'Lightning Speed':
+                            steps = 8
+                            performance_selection = Performance.LIGHTNING
+                        if performance_selection == 'Lightning Quality':
+                            steps = 14
+                            performance_selection = Performance.LIGHTNING
                         steps = performance_selection.steps_uov()
-
+                        
                     progressbar(async_task, 1, 'Downloading upscale models ...')
                     modules.config.downloading_upscale_model()
             if (current_tab == 'inpaint' or (
@@ -504,19 +537,22 @@ def worker():
 
         if 'vary' in goals:
             if 'subtle' in uov_method:
-                denoising_strength = 0.5
+                denoising_strength = 0.4
             if 'strong' in uov_method:
+                denoising_strength = 0.75
+            if advanced_parameters.overwrite_vary_strength > 0:
+                denoising_strength = advanced_parameters.overwrite_vary_strength
                 denoising_strength = 0.85
             if overwrite_vary_strength > 0:
                 denoising_strength = overwrite_vary_strength
 
             shape_ceil = get_image_shape_ceil(uov_input_image)
-            if shape_ceil < 1024:
+            if shape_ceil < 796:
                 print(f'[Vary] Image is resized because it is too small.')
-                shape_ceil = 1024
-            elif shape_ceil > 2048:
+                shape_ceil = 796
+            elif shape_ceil > 6144:
                 print(f'[Vary] Image is resized because it is too big.')
-                shape_ceil = 2048
+                shape_ceil = 6144
 
             uov_input_image = set_image_shape_ceil(uov_input_image, shape_ceil)
 
@@ -558,7 +594,7 @@ def worker():
             else:
                 uov_input_image = resample_image(uov_input_image, width=W * f, height=H * f)
 
-            image_is_super_large = shape_ceil > 2800
+            image_is_super_large = shape_ceil > 3800
 
             if 'fast' in uov_method:
                 direct_return = True
@@ -604,16 +640,23 @@ def worker():
             if len(outpaint_selections) > 0:
                 H, W, C = inpaint_image.shape
                 if 'top' in outpaint_selections:
-                    inpaint_image = np.pad(inpaint_image, [[int(H * 0.3), 0], [0, 0], [0, 0]], mode='edge')
-                    inpaint_mask = np.pad(inpaint_mask, [[int(H * 0.3), 0], [0, 0]], mode='constant',
+                    inpaint_image = np.pad(inpaint_image, [[int(H * 0.35), 0], [0, 0], [0, 0]], mode='edge')
+                    inpaint_mask = np.pad(inpaint_mask, [[int(H * 0.35), 0], [0, 0]], mode='constant',
                                           constant_values=255)
                 if 'bottom' in outpaint_selections:
-                    inpaint_image = np.pad(inpaint_image, [[0, int(H * 0.3)], [0, 0], [0, 0]], mode='edge')
-                    inpaint_mask = np.pad(inpaint_mask, [[0, int(H * 0.3)], [0, 0]], mode='constant',
+                    inpaint_image = np.pad(inpaint_image, [[0, int(H * 0.35)], [0, 0], [0, 0]], mode='edge')
+                    inpaint_mask = np.pad(inpaint_mask, [[0, int(H * 0.35)], [0, 0]], mode='constant',
                                           constant_values=255)
 
                 H, W, C = inpaint_image.shape
                 if 'left' in outpaint_selections:
+                    inpaint_image = np.pad(inpaint_image, [[0, 0], [int(H * 0.35), 0], [0, 0]], mode='edge')
+                    inpaint_mask = np.pad(inpaint_mask, [[0, 0], [int(H * 0.35), 0]], mode='constant',
+                                          constant_values=255)
+                if 'right' in outpaint_selections:
+                    inpaint_image = np.pad(inpaint_image, [[0, 0], [0, int(H * 0.35)], [0, 0]], mode='edge')
+                    inpaint_mask = np.pad(inpaint_mask, [[0, 0], [0, int(H * 0.35)]], mode='constant',
+                                          constant_values=255)
                     inpaint_image = np.pad(inpaint_image, [[0, 0], [int(W * 0.3), 0], [0, 0]], mode='edge')
                     inpaint_mask = np.pad(inpaint_mask, [[0, 0], [int(W * 0.3), 0]], mode='constant',
                                           constant_values=255)
