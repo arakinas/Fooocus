@@ -131,6 +131,7 @@ class Performance(Enum):
     HIGH_QUALITY = 'High Quality'
     EPIC_QUALITY = 'Epic Quality'
     LIGHTNING_QUALITY = 'Lightning Quality'
+    RESTRICTED = 'Restricted'
 
     @classmethod
     def list(cls) -> list:
@@ -140,7 +141,7 @@ class Performance(Enum):
     def has_restricted_features(cls, x) -> bool:
         if isinstance(x, Performance):
             x = x.value
-        return x in [cls.EXTREME_SPEED.value, cls.LIGHTNING.value]
+        return x in [cls.RESTRICTED.value, cls.RESTRICTED.value]
 
     def steps(self) -> int | None:
         return Steps[self.name].value if Steps[self.name] else None

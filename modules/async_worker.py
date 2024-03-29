@@ -264,15 +264,15 @@ def worker():
 
         elif performance_selection == Performance.LIGHTNING or performance_selection == Performance.LIGHTNING_QUALITY:
             print('Enter Lightning mode.')
-            progressbar(async_task, 1, 'Downloading Lightning components ...')
-            loras += [(modules.config.downloading_sdxl_lightning_lora(), 1.0)]
+            #progressbar(async_task, 1, 'Downloading Lightning components ...')
+            #loras += [(modules.config.downloading_sdxl_lightning_lora(), 1.0)] #this isn't always appropriate. Only some models require it. Bad decision to put this in in the first place.
 
             if refiner_model_name != 'None':
                 print(f'Refiner disabled in Lightning mode.')
 
             refiner_model_name = 'None'
-            sampler_name = 'euler'
-            scheduler_name = 'sgm_uniform'
+            #sampler_name = 'euler' #also terrible practice to set this when it's only used by a couple of models. 
+            #scheduler_name = 'sgm_uniform' #also terrible practice to set this when it's only used by a couple of models. 
             sharpness = 1.0
             guidance_scale = 1.8
             adaptive_cfg = 1.0
