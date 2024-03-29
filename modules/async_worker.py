@@ -223,7 +223,7 @@ def worker():
             print(f'Refiner disabled because base model and refiner are same.')
             refiner_model_name = 'None'
 
-        print('Performance selection: ' + performance_selection)
+        print('Performance selection: ' + performance_selection.name)
 
         # assert performance_selection in ['Speed', 'Quality', 'Extreme Speed', 'High Quality', 'Epic Quality', 'Lightning Speed', 'Lightning Quality']
 
@@ -233,9 +233,9 @@ def worker():
         elif performance_selection == Performance.QUALITY:
             steps = 45
         elif performance_selection == Performance.HIGH_QUALITY:
-            steps = 75
+            steps = 60
         elif performance_selection == Performance.EPIC_QUALITY:
-            steps = 110
+            steps = 80
         elif performance_selection == Performance.LIGHTNING:
             steps = 8
         elif performance_selection == Performance.LIGHTNING_QUALITY:
@@ -344,11 +344,11 @@ def worker():
                         if performance_selection == 'Speed':
                             steps = 20
                         if performance_selection == 'Quality':
-                            steps = 50
+                            steps = 45
                         if performance_selection == 'High Quality':
-                            steps = 80            
+                            steps = 60            
                         if performance_selection == 'Epic Quality':
-                            steps = 100          
+                            steps = 80          
                         if performance_selection == 'Lightning Speed':
                             steps = 8
                             performance_selection = Performance.LIGHTNING

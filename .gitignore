@@ -54,3 +54,4 @@ user_path_config-deprecated.txt
 presets/*.json
 wildcards/*.txt
 .DS_Store
+/wildcards
