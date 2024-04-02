@@ -56,3 +56,4 @@ wildcards/*.txt
 .DS_Store
 /wildcards/
 /presets/
+models/checkpoints/put_checkpoints_here
