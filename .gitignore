@@ -57,3 +57,4 @@ wildcards/*.txt
 /wildcards/
 /presets/
 models/checkpoints/put_checkpoints_here
+test/*.py

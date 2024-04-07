@@ -240,8 +240,8 @@ def worker():
             steps = 8
         elif performance_selection == Performance.LIGHTNING_QUALITY:
             steps = 14
-        elif performance_selection == Performance.LTNG_4STEP:
-            steps = 4
+        elif performance_selection == Performance.LTNG_8STEP:
+            steps = 8
         elif performance_selection == Performance.LTNG_2STEP:
             steps = 2
 
@@ -541,9 +541,6 @@ def worker():
             if 'subtle' in uov_method:
                 denoising_strength = 0.4
             if 'strong' in uov_method:
-                denoising_strength = 0.75
-            if advanced_parameters.overwrite_vary_strength > 0:
-                denoising_strength = advanced_parameters.overwrite_vary_strength
                 denoising_strength = 0.85
             if overwrite_vary_strength > 0:
                 denoising_strength = overwrite_vary_strength
@@ -552,9 +549,9 @@ def worker():
             if shape_ceil < 796:
                 print(f'[Vary] Image is resized because it is too small.')
                 shape_ceil = 796
-            elif shape_ceil > 6144:
+            elif shape_ceil > 4096:
                 print(f'[Vary] Image is resized because it is too big.')
-                shape_ceil = 6144
+                shape_ceil = 4096
 
             uov_input_image = set_image_shape_ceil(uov_input_image, shape_ceil)
 
@@ -658,13 +655,6 @@ def worker():
                 if 'right' in outpaint_selections:
                     inpaint_image = np.pad(inpaint_image, [[0, 0], [0, int(H * 0.35)], [0, 0]], mode='edge')
                     inpaint_mask = np.pad(inpaint_mask, [[0, 0], [0, int(H * 0.35)]], mode='constant',
-                                          constant_values=255)
-                    inpaint_image = np.pad(inpaint_image, [[0, 0], [int(W * 0.3), 0], [0, 0]], mode='edge')
-                    inpaint_mask = np.pad(inpaint_mask, [[0, 0], [int(W * 0.3), 0]], mode='constant',
-                                          constant_values=255)
-                if 'right' in outpaint_selections:
-                    inpaint_image = np.pad(inpaint_image, [[0, 0], [0, int(W * 0.3)], [0, 0]], mode='edge')
-                    inpaint_mask = np.pad(inpaint_mask, [[0, 0], [0, int(W * 0.3)]], mode='constant',
                                           constant_values=255)
 
                 inpaint_image = np.ascontiguousarray(inpaint_image.copy())

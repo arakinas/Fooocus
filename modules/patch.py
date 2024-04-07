@@ -464,6 +464,7 @@ def build_loaded(module, loader_name):
         try:
             result = original_loader(*args, **kwargs)
         except Exception as e:
+            print(f'[Fooocus Model Patcher] Failed to load model {loader_name} \n with args {args} \n and kwargs {kwargs}\n and result: {result}')
             result = None
             exp = str(e) + '\n'
             for path in list(args) + list(kwargs.values()):

@@ -108,12 +108,12 @@ class Steps(IntEnum):
     QUALITY = 60
     SPEED = 30
     EXTREME_SPEED = 8
-    LIGHTNING = 8
+    LIGHTNING = 4
     HIGH_QUALITY = 80
     EPIC_QUALITY = 100
     LIGHTNING_QUALITY = 12
     LTNG_2STEP = 2
-    LTNG_4STEP = 4
+    LTNG_8STEP = 8
 
 class StepsUOV(IntEnum):
     QUALITY = 36
@@ -124,7 +124,7 @@ class StepsUOV(IntEnum):
     EPIC_QUALITY = 60
     LIGHTNING_QUALITY = 10
     LTNG_2STEP = 2
-    LTNG_4STEP = 4
+    LTNG_8STEP = 6
 
 
 class Performance(Enum):
@@ -136,7 +136,7 @@ class Performance(Enum):
     EPIC_QUALITY = 'Epic Quality'
     LIGHTNING_QUALITY = 'Lightning Quality'
     LTNG_2STEP = 'Lightning 2 Step'
-    LTNG_4STEP = 'Lightning 4 Step'
+    LTNG_8STEP = 'Lightning 8 Step'
 
     @classmethod
     def list(cls) -> list:
@@ -146,7 +146,7 @@ class Performance(Enum):
     def has_restricted_features(cls, x) -> bool:
         if isinstance(x, Performance):
             x = x.value
-        return x in [cls.LIGHTNING.value, cls.EXTREME_SPEED.value]
+        return x in [cls.EXTREME_SPEED.value, cls.LIGHTNING.value]
 
     def steps(self) -> int | None:
         return Steps[self.name].value if Steps[self.name] else None
