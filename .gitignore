@@ -52,9 +52,11 @@ user_path_config-deprecated.txt
 /.coverage*
 /auth.json
 presets/*.json
-wildcards/*.txt
+wildcards/.txt*
 .DS_Store
 /wildcards/
 /presets/
 models/checkpoints/put_checkpoints_here
 test/*.py
+wildcards/*.txt
+wildcards/samples/*.txt

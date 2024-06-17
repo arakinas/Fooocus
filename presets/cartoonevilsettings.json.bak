@@ -1,0 +1,22 @@
+{
+    "negative_prompt": "[embedding:bhands-neg]bhands1,[embedding:easynegative], prepubescent, text, watermark",
+	"prompt_expansion": "[in a dark cold snowing night of a lords stone manor light by torches] male ninja crouching while sneaking in the shadows, dynamic motion, action sequence, travel lines, speed, fast, BREAK, high detail, perfect, 8k, masterpiece, detail, best quality, HD, fantasy, high magic, dramatic, sharp focus, intricate, elegant",
+	"performance": "Lightning Quality",
+	"guidance_scale": 1.8,
+	"sharpness": 7.5,
+	"adm_guidance": "(1.5, 0.8, 0.3)",
+	"base_model": "FluentlyXL-v3-Lightning-4S.safetensors",
+	"refiner_model": "None",
+	"refiner_switch": 0.75,
+	"sampler": "euler",
+	"scheduler": "karras",
+	"seed": "3967531876571583058",
+	"lora_combined_1": "Perfect Hands v2.safetensors : 1.0",
+	"metadata_scheme": false,
+	"version": "Fooocus v2.3.1",
+    "default_styles": [
+        "Fooocus V2", 
+        "SAI Fantasy Art", 
+        "MRE Manga"
+    ]
+}
