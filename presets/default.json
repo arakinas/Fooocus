@@ -41,5 +41,6 @@
         "Fooocus Enhance",
         "Fooocus Sharp"
     ],
-    "default_aspect_ratio": "1152*896"
+    "default_aspect_ratio": "1152*896",
+    "default_overwrite_step": -1
 }
