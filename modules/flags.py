@@ -141,12 +141,9 @@ class Steps(IntEnum):
     SPEED = 30
     EXTREME_SPEED = 8
     HIGH_QUALITY = 80
-    EPIC_QUALITY = 100
     LIGHTNING_QUALITY = 12
     LIGHTNING = 8
     HYPER_SD = 4
-    HIGH_QUALITY = 80
-    EPIC_QUALITY = 100
 
     @classmethod
     def keys(cls) -> list:
@@ -159,7 +156,6 @@ class StepsUOV(IntEnum):
     EXTREME_SPEED = 8
     LIGHTNING = 6
     HIGH_QUALITY = 50
-    EPIC_QUALITY = 60
     LIGHTNING_QUALITY = 8
     HYPER_SD = 4
 
@@ -170,7 +166,6 @@ class Performance(Enum):
     EXTREME_SPEED = 'Extreme Speed'
     LIGHTNING = 'Lightning'
     HIGH_QUALITY = 'High Quality'
-    EPIC_QUALITY = 'Epic Quality'
     LIGHTNING_QUALITY = 'Lightning Quality'
     HYPER_SD = 'Hyper-SD'
 
